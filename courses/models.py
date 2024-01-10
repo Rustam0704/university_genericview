@@ -7,7 +7,7 @@ class Speciality(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}-{self.start_date}'
 
     class Meta:
         verbose_name_plural = "yo’nalishlar"
@@ -15,11 +15,11 @@ class Speciality(models.Model):
 
 class Teacher(models.Model):
     first_name = models.CharField(max_length=30, blank=False, null=False)
-    last_name = models.CharField(max_length=30, blank=True)
-    degree = models.CharField(max_length=10, blank=True)
+    last_name = models.CharField(max_length=30, blank=True, null=True)
+    degree = models.CharField(max_length=10, blank=True, null=True)
     speciality = models.ForeignKey(Speciality, on_delete=models.CASCADE)
     def __str__(self):
-        return f'{self.first_name}-{self.speciality}'
+        return f'{self.first_name}-{self.speciality}-{self.degree}'
 
     class Meta:
         verbose_name_plural = "o’qituvchilar"
