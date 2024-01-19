@@ -4,7 +4,7 @@
     <h1>Teacher Create Page</h1>
     <form action="{% url 'courses:teacher-create' %}" method="post">
     {% csrf_token %}
-    {{ formt.as_p }}
+    {{ form.as_p }}
 
     <button type="submit">Submit</button>
     </form>

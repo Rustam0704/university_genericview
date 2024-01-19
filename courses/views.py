@@ -41,10 +41,9 @@ def speciality_create(request):
             return redirect('courses:home-page')
         else:
             return render(request, "courses/speciality_create.html", context={"form": form})
-
-
     else:
         return render(request, "courses/speciality_create.html", context={"form": form})
+
 
 def teacher_create(request):
     form = TeacherForm
@@ -57,5 +56,3 @@ def teacher_create(request):
             return render(request, "courses/teacher_create.html", context={"form": form})
     else:
         return render(request, "courses/teacher_create.html", context={"form": form})
-
-
