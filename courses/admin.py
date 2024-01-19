@@ -5,7 +5,6 @@ from .models import Teacher, Speciality, Subject
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     list_filter = ("degree",)
-    list_display = ("first_name", "degree", "last_name", "age", "email")
 
 
 @admin.register(Speciality)

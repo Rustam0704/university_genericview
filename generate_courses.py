@@ -1,56 +1,40 @@
-import random
-
-from faker import Faker
-
-faker = Faker()
-
-
-def fake_test():
-    Degree = [
-        ("master", "Master"),
-        ("bachelor", "Bachelor"),
-        ("academic", "Academic"),
-        ("drscience", "DrScience"),
-        ("phs", "PhD"),
-    ]
-    # print(random.choice(Degree))
-
-
-# print(faker.book())
+import os
 
 
 def main():
-    Degree = [
-        ("master", "Master"),
-        ("bachelor", "Bachelor"),
-        ("academic", "Academic"),
-        ("drscience", "DrScience"),
-        ("phs", "PhD"),
-    ]
+    for _ in range(100):
+        teacher = Teacher.objects.create(
+            first_name=faker.first_name(),
+            last_name=faker.last_name(),
+            degree=faker.random_element(elements=('master', 'bachelor', 'academic', 'drscience', 'phs')),
+            age=faker.random_int(min=25, max=65),
+            email=faker.email(),
+        )
 
-    for _ in range(25):
-        # Teacher.objects.create(first_name=faker.first_name(), last_name=faker.last_name(), age=random.randint(25, 55),
-        #                        email=faker.email(), degree=random.choice(Degree))
-        # spec=Speciality.objects.create(name=faker.job(), is_active=random.choice([True, False]), start_date=faker.date())
-        # spec.slug=f'{spec.name}-{spec.start_date}'
-        # spec.save()
+        speciality = Speciality.objects.create(
+            name=faker.job(),
+            code=faker.uuid4(),
+            is_active=faker.boolean(),
+            start_date=faker.date_between(start_date='-5y', end_date='today'),
+            slug=faker.slug(),
+        )
 
-        subj = Subject.objects.create(name=faker.job(), teacher=Teacher.objects.get(id=random.randint(102, 128)))
-        for j in range(random.randint(1, 5)):
-            spec = Speciality.objects.get(id=random.randint(31, 55))
-            subj.speciality.add(spec)
-        subj.save()
+        subject = Subject.objects.create(
+            name=faker.catch_phrase(),
+            teacher=teacher,
+        )
+        subject.speciality.add(speciality)
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     import os
 
     from django.core.wsgi import get_wsgi_application
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "university.settings")
     application = get_wsgi_application()
+    from faker import Faker
 
-    from courses.models import Speciality, Teacher, Subject
+    from courses.models import Subject, Teacher, Speciality
 
+    faker = Faker()
     main()
-    # fake_test()

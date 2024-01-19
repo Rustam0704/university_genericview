@@ -13,10 +13,23 @@ class AbtractModel(models.Model):
         abstract = True
 
 
+class Subject(AbtractModel):
+    name = models.CharField(max_length=28, )
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, related_name="subjects")
+    speciality = models.ManyToManyField('Speciality', related_name="subjects")
+
+    class Meta:
+        verbose_name = "Subject"
+        verbose_name_plural = "Subjects"
+        db_table = "subject"
+
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Teacher(AbtractModel):
     Degree = [
-        ( "master", "Master"),
+        ("master", "Master"),
         ("bachelor", "Bachelor"),
         ("academic", "Academic"),
         ("drscience", "DrScience"),
@@ -33,6 +46,7 @@ class Teacher(AbtractModel):
         verbose_name = "Teacher"
         verbose_name_plural = "Teachers"
         db_table = "teacher"
+
     def __str__(self):
         return "{0}{1}".format(self.first_name, self.last_name)
 
@@ -49,18 +63,9 @@ class Speciality(AbtractModel):
         verbose_name_plural = "Specilialities"
         db_table = "speciality"
 
-    def __str__(self):
-        return f"{self.name}"
-
-class Subject(AbtractModel):
-    name = models.CharField(max_length=28,)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name="subjects")
-    speciality = models.ManyToManyField(Speciality, related_name="subjects")
-
-    class Meta:
-        verbose_name = "Subject"
-        verbose_name_plural = "Subjects"
-        db_table = "subject"
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.slug = slugify("-".join([self.start_date, self.name]))
+        super().save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return f"{self.name}"
