@@ -1,0 +1,10 @@
+{% extends 'bookshop/base.html' %}
+{% block title %}author Detail{% endblock %}
+{% block body %}
+    <h1>Author Create Page</h1>
+    <form method="post" action="{% url 'bookshop:author-create' %}">
+        {{ form.as_div }}
+        {% csrf_token %}
+        <button type="submit">Create Store</button>
+    </form>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 
 
 class AbtractBaseModel(models.Model):
@@ -26,6 +27,9 @@ class Author(AbstractUser):
     def __str__(self):
         return self.username
 
+    def get_absolute_url(self):
+        return reverse('bookshop:author-list', kwargs={"pk": self.id})
+
 
 class Publisher(AbtractBaseModel):
     name = models.CharField(max_length=86)
@@ -50,7 +54,10 @@ class Book(AbtractBaseModel):
 
 class Store(models.Model):
     name = models.CharField(max_length=300)
-    books = models.ManyToManyField(Book)
+    books = models.ManyToManyField(Book, related_name="stores")
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('bookshop:store-detail', kwargs={"pk": self.id})

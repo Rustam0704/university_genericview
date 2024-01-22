@@ -1,7 +1,7 @@
 {% extends 'courses/base.html' %}
 {% block title %} Home Page {% endblock %}
 {% block body %}
-    <h1>Teachers</h1> <a type="button" href="{% url 'courses:teacher-create' %}" ><button>create new teacher</button></a><br> <br>"
+    <h1>Teachers</h1> <a href=""> Create New Teacher</a>
     {% for teacher in teachers %}
         <a href="{% url 'courses:teacher-detail' teacher.id %}">{{ teacher.first_name }}</a> <br>
     {% endfor %}

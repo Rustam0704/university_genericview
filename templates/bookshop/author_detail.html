@@ -1,0 +1,6 @@
+    {% extends 'bookshop/base.html' %}
+    {% block title %}Author Detail{% endblock %}
+    {% block body %}
+        <h1>Author Detail Page</h1>
+        <h3>{{ author.username }}  {{ author.is_superuser }}  {{ author.is_active }}</h3>
+    {% endblock %}

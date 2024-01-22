@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from courses.forms import SpecialityForm, TeacherForm
+from courses.forms import SpecialityForm
 from courses.models import Subject, Speciality, Teacher
 
 
@@ -41,18 +41,7 @@ def speciality_create(request):
             return redirect('courses:home-page')
         else:
             return render(request, "courses/speciality_create.html", context={"form": form})
+
+
     else:
         return render(request, "courses/speciality_create.html", context={"form": form})
-
-
-def teacher_create(request):
-    form = TeacherForm
-    if request.method == "POST":
-        form = TeacherForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('courses:home-page')
-        else:
-            return render(request, "courses/teacher_create.html", context={"form": form})
-    else:
-        return render(request, "courses/teacher_create.html", context={"form": form})
